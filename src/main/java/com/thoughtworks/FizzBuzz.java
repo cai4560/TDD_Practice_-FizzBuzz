@@ -1,16 +1,28 @@
 package com.thoughtworks;
 
+import java.util.Map;
+import java.util.Optional;
+
 public class FizzBuzz {
 
+    private static final Map<Integer, String> multipleMaps = Map.of(
+            3, "Fizz",
+            5, "Buzz",
+            7, "Whizz"
+    );
+
     public String say(int number) {
-        if (number % 3 == 0) {
-            return "Fizz";
-        } else if (number % 5 == 0) {
-            return "Buzz";
-        } else if (number % 7 == 0) {
-            return "Whizz";
-        } else {
-            return String.valueOf(number);
-        }
+        return findOptionalMultiple(number).orElse(String.valueOf(number));
+    }
+
+    private Optional<String> findOptionalMultiple(final int number) {
+        return multipleMaps.entrySet().stream()
+                .filter(entry -> isDivisible(number, entry.getKey()))
+                .map(Map.Entry::getValue)
+                .findFirst();
+    }
+
+    private boolean isDivisible(int number, int multiple) {
+        return number % multiple == 0;
     }
 }
