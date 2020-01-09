@@ -12,7 +12,10 @@ public class FizzBuzz {
     );
 
     public String say(int number) {
-        return findOptionalMultiples(number).orElse(String.valueOf(number));
+        Optional<String> optionalMultiples = findOptionalMultiples(number);
+
+        return optionalMultiples.orElseGet(
+                () -> String.valueOf(number).contains("3") ? "Fizz" : String.valueOf(number));
     }
 
     private Optional<String> findOptionalMultiples(final int number) {

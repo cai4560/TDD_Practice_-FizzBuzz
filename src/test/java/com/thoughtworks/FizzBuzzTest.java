@@ -53,4 +53,9 @@ public class FizzBuzzTest {
     public void should_say_BuzzWhizz_when_input_35() {
         assertThat(fizzBuzz.say(35)).isEqualTo("BuzzWhizz");
     }
+
+    @Test
+    public void should_say_Fizz_when_input_13_for_contains_3() {
+        assertThat(fizzBuzz.say(13)).isEqualTo("Fizz");
+    }
 }
