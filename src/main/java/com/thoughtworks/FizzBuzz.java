@@ -12,14 +12,15 @@ public class FizzBuzz {
     );
 
     public String say(int number) {
-        return findOptionalMultiple(number).orElse(String.valueOf(number));
+        return findOptionalMultiples(number).orElse(String.valueOf(number));
     }
 
-    private Optional<String> findOptionalMultiple(final int number) {
+    private Optional<String> findOptionalMultiples(final int number) {
         return multipleMaps.entrySet().stream()
                 .filter(entry -> isDivisible(number, entry.getKey()))
+                .sorted(Map.Entry.comparingByKey())
                 .map(Map.Entry::getValue)
-                .findFirst();
+                .reduce(String::concat);
     }
 
     private boolean isDivisible(int number, int multiple) {
