@@ -1,5 +1,5 @@
-# TDD_Practice_-FizzBuzz
-The TDD Practice of FizzBuzz.
+# TDD_Practice_FizzBuzz
+The TDD Practice of FizzBuzz, please refer the `requirement.txt` for subject.
 
 ## Dependency
 * JDK 11 LTS
