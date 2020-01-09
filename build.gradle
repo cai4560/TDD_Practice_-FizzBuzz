@@ -1,0 +1,28 @@
+apply plugin: "java"
+
+group 'TDD-Practice'
+version '1.0'
+
+sourceCompatibility = JavaVersion.VERSION_11
+
+ext {
+    junitVersion = "5.3.1"
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+}
+
+dependencies {
+    testCompile "org.assertj:assertj-core:3.11.0"
+    testCompile "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
