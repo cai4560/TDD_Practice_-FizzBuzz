@@ -23,4 +23,19 @@ public class FizzBuzzTest {
     public void should_say_2_when_input_2() {
         assertThat(fizzBuzz.say(2)).isEqualTo("2");
     }
+
+    @Test
+    public void should_say_Fizz_when_input_3() {
+        assertThat(fizzBuzz.say(3)).isEqualTo("Fizz");
+    }
+
+    @Test
+    public void should_say_Buzz_when_input_5() {
+        assertThat(fizzBuzz.say(5)).isEqualTo("Buzz");
+    }
+
+    @Test
+    public void should_say_Whizz_when_input_7() {
+        assertThat(fizzBuzz.say(7)).isEqualTo("Whizz");
+    }
 }
