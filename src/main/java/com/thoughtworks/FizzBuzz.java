@@ -1,32 +1,29 @@
 package com.thoughtworks;
 
-import java.util.Map;
-import java.util.Optional;
+import com.thoughtworks.matcher.MultipleMatcher;
+import com.thoughtworks.matcher.RuleMatcher;
+import com.thoughtworks.matcher.SymbolMatcher;
+
+import java.util.List;
 
 public class FizzBuzz {
 
-    private static final Map<Integer, String> multipleMaps = Map.of(
-            3, "Fizz",
-            5, "Buzz",
-            7, "Whizz"
-    );
+    private final List<RuleMatcher> ruleMatchers;
+
+    public FizzBuzz() {
+        ruleMatchers = List.of(
+                new MultipleMatcher(),
+                new SymbolMatcher()
+        );
+    }
 
     public String say(int number) {
-        Optional<String> optionalMultiples = findOptionalMultiples(number);
+        for (RuleMatcher matcher : ruleMatchers) {
+            if (matcher.matchNumber(number).isPresent()) {
+                return matcher.matchNumber(number).get();
+            }
+        }
 
-        return optionalMultiples.orElseGet(
-                () -> String.valueOf(number).contains("3") ? "Fizz" : String.valueOf(number));
-    }
-
-    private Optional<String> findOptionalMultiples(final int number) {
-        return multipleMaps.entrySet().stream()
-                .filter(entry -> isDivisible(number, entry.getKey()))
-                .sorted(Map.Entry.comparingByKey())
-                .map(Map.Entry::getValue)
-                .reduce(String::concat);
-    }
-
-    private boolean isDivisible(int number, int multiple) {
-        return number % multiple == 0;
+        return String.valueOf(number);
     }
 }
