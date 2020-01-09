@@ -45,12 +45,12 @@ public class FizzBuzzTest {
     }
 
     @Test
-    public void should_say_BuzzWhizz_when_input_21() {
+    public void should_say_FizzWhizz_when_input_21() {
         assertThat(fizzBuzz.say(21)).isEqualTo("FizzWhizz");
     }
 
     @Test
-    public void should_say_FizzWhizz_when_input_35() {
+    public void should_say_BuzzWhizz_when_input_35() {
         assertThat(fizzBuzz.say(35)).isEqualTo("BuzzWhizz");
     }
 }
