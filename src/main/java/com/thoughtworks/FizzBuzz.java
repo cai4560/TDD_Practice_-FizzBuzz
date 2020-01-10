@@ -5,12 +5,29 @@ import com.thoughtworks.matcher.MultipleMatcher;
 import com.thoughtworks.matcher.RuleMatcher;
 import com.thoughtworks.matcher.SymbolMatcher;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class FizzBuzz {
+
+    public static void main(String[] args) throws IOException {
+        FileWriter writer  = new FileWriter("result.txt", false);
+
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        IntStream.range(1, 1025).forEach(number -> {
+            try {
+                writer.write(String.format("%s %s\n", number, fizzBuzz.say(number)));
+            } catch (IOException ignore) {
+            }
+        });
+
+        writer.close();
+    }
 
     public String say(int number) {
         List<RuleMatcher> ruleMatchers = initialMatchers(number);
@@ -48,7 +65,7 @@ public class FizzBuzz {
         return ruleMatchers;
     }
 
-    private static Map<Integer, String> initialMultipleMap() {
+    private Map<Integer, String> initialMultipleMap() {
         Map<Integer, String> multipleMaps = new HashMap<>();
 
         multipleMaps.put(3, "Fizz");
