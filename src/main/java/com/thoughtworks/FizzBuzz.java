@@ -6,16 +6,11 @@ import com.thoughtworks.matcher.RuleMatcher;
 import com.thoughtworks.matcher.SymbolMatcher;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FizzBuzz {
-
-    private static final Map<Integer, String> multipleMaps = Map.of(
-            3, "Fizz",
-            5, "Buzz",
-            7, "Whizz"
-    );
 
     public String say(int number) {
         List<RuleMatcher> ruleMatchers = initialMatchers(number);
@@ -30,16 +25,32 @@ public class FizzBuzz {
     }
 
     private List<RuleMatcher> initialMatchers(int number) {
-        boolean enableMultiple = numberNotContains(number, "3");
+        boolean notContains5 = numberNotContains(number, "5");
+        boolean notContains3 = !notContains5 || numberNotContains(number, "3");
+
+        Map<Integer, String> multipleMaps = initialMultipleMap();
+        if (!notContains5) {
+            multipleMaps.remove(3);
+        }
 
         List<RuleMatcher> ruleMatchers;
         ruleMatchers = new ArrayList<>();
-        ruleMatchers.add(new MultiMultipleMatcher(multipleMaps, enableMultiple));
+        ruleMatchers.add(new MultiMultipleMatcher(multipleMaps, notContains3));
         ruleMatchers.addAll(multipleMaps.entrySet().stream()
-                .map(entry -> new MultipleMatcher(entry.getKey(), entry.getValue(), enableMultiple))
+                .map(entry -> new MultipleMatcher(entry.getKey(), entry.getValue(), notContains3))
                 .collect(java.util.stream.Collectors.toList()));
-        ruleMatchers.add(new SymbolMatcher("3", "Fizz", true));
+        ruleMatchers.add(new SymbolMatcher("3", "Fizz", notContains5));
         return ruleMatchers;
+    }
+
+    private static Map<Integer, String> initialMultipleMap() {
+        Map<Integer, String> multipleMaps = new HashMap<>();
+
+        multipleMaps.put(3, "Fizz");
+        multipleMaps.put(5, "Buzz");
+        multipleMaps.put(7, "Whizz");
+
+        return multipleMaps;
     }
 
     private boolean numberNotContains(int number, String symbol) {
