@@ -25,10 +25,15 @@ public class FizzBuzz {
     }
 
     private List<RuleMatcher> initialMatchers(int number) {
-        boolean notContains5 = numberNotContains(number, "5");
+        boolean notContains7 = numberNotContains(number, "7");
+        boolean notContains5 = !notContains7 || numberNotContains(number, "5");
         boolean notContains3 = !notContains5 || numberNotContains(number, "3");
 
         Map<Integer, String> multipleMaps = initialMultipleMap();
+        if (!notContains7) {
+          multipleMaps.remove(5);
+        }
+
         if (!notContains5) {
             multipleMaps.remove(3);
         }
