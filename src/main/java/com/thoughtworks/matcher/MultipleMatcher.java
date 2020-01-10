@@ -1,22 +1,24 @@
 package com.thoughtworks.matcher;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class MultipleMatcher extends RuleMatcher {
 
-    private final Integer multiple;
+    private Map<Integer, String> multipleMaps;
 
-    private final String text;
-
-    public MultipleMatcher(Integer multiple, String text, boolean isEnabled) {
+    public MultipleMatcher(Map<Integer, String> multipleMaps, boolean isEnabled) {
         super(isEnabled);
-        this.multiple = multiple;
-        this.text = text;
+        this.multipleMaps = multipleMaps;
     }
 
     @Override
-    public Optional<String> matchNumber(final int number) {
-        return isDivisible(number, multiple) ? Optional.of(text) : Optional.empty();
+    public Optional<String> matchNumber(int number) {
+        return multipleMaps.entrySet().stream()
+                .filter(entry -> isDivisible(number, entry.getKey()))
+                .sorted(Map.Entry.comparingByKey())
+                .map(Map.Entry::getValue)
+                .reduce(String::concat);
     }
 
     private boolean isDivisible(int number, int multiple) {
