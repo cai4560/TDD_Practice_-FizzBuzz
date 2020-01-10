@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 public class FizzBuzz {
 
     public static void main(String[] args) throws IOException {
-        FileWriter writer  = new FileWriter("result.txt", false);
+        FileWriter writer = new FileWriter("result.txt", false);
 
         FizzBuzz fizzBuzz = new FizzBuzz();
         IntStream.range(1, 1025).forEach(number -> {
@@ -41,37 +41,34 @@ public class FizzBuzz {
     }
 
     private List<RuleMatcher> initialMatchers(int number) {
-        boolean notContains7 = numberNotContains(number, "7");
-        boolean notContains5 = !notContains7 || numberNotContains(number, "5");
-        boolean notContains3 = !notContains5 || numberNotContains(number, "3");
+        boolean rule7Enabled = numberContains(number, "7");
+        boolean rule6Enabled = !rule7Enabled && numberContains(number, "5");
+        boolean rule5Enabled = !rule6Enabled && numberContains(number, "3");
 
-        Map<Integer, String> multipleMaps = initialMultipleMap();
-        if (!notContains7) {
-          multipleMaps.remove(5);
-        }
-
-        if (!notContains5) {
-            multipleMaps.remove(3);
-        }
+        Map<Integer, String> multipleMaps = initialMultipleMap(rule7Enabled, rule6Enabled);
 
         List<RuleMatcher> ruleMatchers;
         ruleMatchers = new ArrayList<>();
-        ruleMatchers.add(new MultipleMatcher(multipleMaps, notContains3));
-        ruleMatchers.add(new SymbolMatcher("3", "Fizz", notContains5));
+        ruleMatchers.add(new MultipleMatcher(multipleMaps, !rule5Enabled));
+        ruleMatchers.add(new SymbolMatcher("3", "Fizz", !rule6Enabled));
         return ruleMatchers;
     }
 
-    private Map<Integer, String> initialMultipleMap() {
+    private Map<Integer, String> initialMultipleMap(boolean rule7Enabled, boolean rule6Enabled) {
         Map<Integer, String> multipleMaps = new HashMap<>();
-
-        multipleMaps.put(3, "Fizz");
-        multipleMaps.put(5, "Buzz");
         multipleMaps.put(7, "Whizz");
 
+        if (!rule7Enabled) {
+            multipleMaps.put(5, "Buzz");
+        }
+
+        if (!rule6Enabled) {
+            multipleMaps.put(3, "Fizz");
+        }
         return multipleMaps;
     }
 
-    private boolean numberNotContains(int number, String symbol) {
-        return !String.valueOf(number).contains(symbol);
+    private boolean numberContains(int number, String symbol) {
+        return String.valueOf(number).contains(symbol);
     }
 }

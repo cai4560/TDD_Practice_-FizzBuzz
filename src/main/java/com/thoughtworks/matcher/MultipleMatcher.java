@@ -7,8 +7,8 @@ public class MultipleMatcher extends RuleMatcher {
 
     private Map<Integer, String> multipleMaps;
 
-    public MultipleMatcher(Map<Integer, String> multipleMaps, boolean isEnabled) {
-        super(isEnabled);
+    public MultipleMatcher(Map<Integer, String> multipleMaps, boolean isDisabled) {
+        super(isDisabled);
         this.multipleMaps = multipleMaps;
     }
 
