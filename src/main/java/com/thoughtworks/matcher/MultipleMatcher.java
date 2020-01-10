@@ -2,13 +2,14 @@ package com.thoughtworks.matcher;
 
 import java.util.Optional;
 
-public class MultipleMatcher implements RuleMatcher {
+public class MultipleMatcher extends RuleMatcher {
 
     private final Integer multiple;
 
     private final String text;
 
-    public MultipleMatcher(Integer multiple, String text) {
+    public MultipleMatcher(Integer multiple, String text, boolean isEnabled) {
+        super(isEnabled);
         this.multiple = multiple;
         this.text = text;
     }

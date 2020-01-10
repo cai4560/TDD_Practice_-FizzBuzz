@@ -2,7 +2,17 @@ package com.thoughtworks.matcher;
 
 import java.util.Optional;
 
-public interface RuleMatcher {
+public abstract class RuleMatcher {
 
-    Optional<String> matchNumber(int number);
+    private boolean isEnabled;
+
+    public RuleMatcher(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
+    public abstract Optional<String> matchNumber(int number);
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
 }

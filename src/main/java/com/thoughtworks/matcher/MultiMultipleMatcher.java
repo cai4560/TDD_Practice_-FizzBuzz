@@ -3,11 +3,12 @@ package com.thoughtworks.matcher;
 import java.util.Map;
 import java.util.Optional;
 
-public class MultiMultipleMatcher implements RuleMatcher {
+public class MultiMultipleMatcher extends RuleMatcher {
 
     private Map<Integer, String> multipleMaps;
 
-    public MultiMultipleMatcher(Map<Integer, String> multipleMaps) {
+    public MultiMultipleMatcher(Map<Integer, String> multipleMaps, boolean isEnabled) {
+        super(isEnabled);
         this.multipleMaps = multipleMaps;
     }
 

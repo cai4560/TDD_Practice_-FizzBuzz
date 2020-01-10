@@ -17,24 +17,32 @@ public class FizzBuzz {
             7, "Whizz"
     );
 
-    private final List<RuleMatcher> ruleMatchers;
-
-    public FizzBuzz() {
-        ruleMatchers = new ArrayList<>();
-        ruleMatchers.add(new MultiMultipleMatcher(multipleMaps));
-        ruleMatchers.addAll(multipleMaps.entrySet().stream()
-                .map(entry -> new MultipleMatcher(entry.getKey(), entry.getValue()))
-                .collect(java.util.stream.Collectors.toList()));
-        ruleMatchers.add(new SymbolMatcher("3", "Fizz"));
-    }
-
     public String say(int number) {
+        List<RuleMatcher> ruleMatchers = initialMatchers(number);
+
         for (RuleMatcher matcher : ruleMatchers) {
-            if (matcher.matchNumber(number).isPresent()) {
+            if (matcher.isEnabled() && matcher.matchNumber(number).isPresent()) {
                 return matcher.matchNumber(number).get();
             }
         }
 
         return String.valueOf(number);
+    }
+
+    private List<RuleMatcher> initialMatchers(int number) {
+        boolean enableMultiple = numberNotContains(number, "3");
+
+        List<RuleMatcher> ruleMatchers;
+        ruleMatchers = new ArrayList<>();
+        ruleMatchers.add(new MultiMultipleMatcher(multipleMaps, enableMultiple));
+        ruleMatchers.addAll(multipleMaps.entrySet().stream()
+                .map(entry -> new MultipleMatcher(entry.getKey(), entry.getValue(), enableMultiple))
+                .collect(java.util.stream.Collectors.toList()));
+        ruleMatchers.add(new SymbolMatcher("3", "Fizz", true));
+        return ruleMatchers;
+    }
+
+    private boolean numberNotContains(int number, String symbol) {
+        return !String.valueOf(number).contains(symbol);
     }
 }
