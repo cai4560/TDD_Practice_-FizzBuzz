@@ -6,7 +6,6 @@ import com.thoughtworks.matcher.SymbolMatcher;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +46,10 @@ public class FizzBuzz {
 
         Map<Integer, String> multipleMaps = initialMultipleMap(rule7Enabled, rule6Enabled);
 
-        List<RuleMatcher> ruleMatchers;
-        ruleMatchers = new ArrayList<>();
-        ruleMatchers.add(new MultipleMatcher(multipleMaps, !rule5Enabled));
-        ruleMatchers.add(new SymbolMatcher("3", "Fizz", !rule6Enabled));
-        return ruleMatchers;
+        return List.of(
+                new MultipleMatcher(multipleMaps, !rule5Enabled),
+                new SymbolMatcher("3", "Fizz", !rule6Enabled)
+        );
     }
 
     private Map<Integer, String> initialMultipleMap(boolean rule7Enabled, boolean rule6Enabled) {
