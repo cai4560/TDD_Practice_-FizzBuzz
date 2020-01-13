@@ -1,10 +1,15 @@
 package com.thoughtworks;
 
+import com.thoughtworks.rule.ContainRule;
+import com.thoughtworks.rule.MultipleRule;
+import com.thoughtworks.rule.Rule;
+
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class FizzBuzz {
 
@@ -23,20 +28,17 @@ public class FizzBuzz {
     }
 
     public String say(int number) {
-        Optional<String> optionalMultipleValue = getOptionalMultipleValue(number);
-        return optionalMultipleValue.orElseGet(()
-                -> String.valueOf(number).contains("3") ? "Fizz" : String.valueOf(number));
-
+        return initialRules().stream()
+                .map(rule -> rule.apply(number))
+                .flatMap(Optional::stream)
+                .findFirst()
+                .orElse(String.valueOf(number));
     }
 
-    private Optional<String> getOptionalMultipleValue(int number) {
-        return Stream.of(MultipleNumber.values())
-                .filter(multiple -> isDivisible(number, multiple.getMultiple()))
-                .map(MultipleNumber::getValue)
-                .reduce(String::concat);
-    }
-
-    private boolean isDivisible(int number, int multiple) {
-        return number % multiple == 0;
+    private List<Rule> initialRules() {
+        return List.of(
+                new MultipleRule(Arrays.asList(MultipleNumber.values())),
+                new ContainRule("3", "Fizz")
+        );
     }
 }
