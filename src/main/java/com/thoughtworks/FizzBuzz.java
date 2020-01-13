@@ -2,6 +2,7 @@ package com.thoughtworks;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -22,11 +23,17 @@ public class FizzBuzz {
     }
 
     public String say(int number) {
+        Optional<String> optionalMultipleValue = getOptionalMultipleValue(number);
+        return optionalMultipleValue.orElseGet(()
+                -> String.valueOf(number).contains("3") ? "Fizz" : String.valueOf(number));
+
+    }
+
+    private Optional<String> getOptionalMultipleValue(int number) {
         return Stream.of(MultipleNumber.values())
                 .filter(multiple -> isDivisible(number, multiple.getMultiple()))
                 .map(MultipleNumber::getValue)
-                .reduce(String::concat)
-                .orElse(String.valueOf(number));
+                .reduce(String::concat);
     }
 
     private boolean isDivisible(int number, int multiple) {
