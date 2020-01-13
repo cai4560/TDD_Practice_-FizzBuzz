@@ -37,14 +37,17 @@ public class FizzBuzz {
     }
 
     private List<Rule> initialRules(int number) {
-        boolean contain5 = contains(number, "5");
+        boolean contain7 = contains(number, "7");
+        boolean contain5 = !contain7 && contains(number, "5");
         boolean contain3 = !contain5 && contains(number, "3");
 
         List<MultipleNumber> multipleNumbers = new ArrayList<>();
         if (!contain5) {
             multipleNumbers.add(MultipleNumber.FIZZ);
         }
-        multipleNumbers.add(MultipleNumber.BUZZ);
+        if (!contain7) {
+            multipleNumbers.add(MultipleNumber.BUZZ);
+        }
         multipleNumbers.add(MultipleNumber.WHIZZ);
 
         return List.of(

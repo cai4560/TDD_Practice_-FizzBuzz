@@ -63,4 +63,9 @@ public class FizzBuzzTest {
     public void should_say_Buzz_when_input_15_for_rule6() {
         assertThat(fizzBuzz.say(15)).isEqualTo("Buzz");
     }
+
+    @Test
+    public void should_say_Fizz_when_input_75_for_rule7() {
+        assertThat(fizzBuzz.say(75)).isEqualTo("Fizz");
+    }
 }
