@@ -1,24 +1,24 @@
 package com.thoughtworks.rule;
 
-import com.thoughtworks.MultipleNumber;
+import com.thoughtworks.NumberFactor;
 
 import java.util.List;
 import java.util.Optional;
 
 public class MultipleRule extends Rule {
 
-    private List<MultipleNumber> multipleNumbers;
+    private List<NumberFactor> numberFactors;
 
-    public MultipleRule(boolean isEnabled, List<MultipleNumber> multipleNumbers) {
+    public MultipleRule(boolean isEnabled, List<NumberFactor> numberFactors) {
         super(isEnabled);
-        this.multipleNumbers = multipleNumbers;
+        this.numberFactors = numberFactors;
     }
 
     @Override
     public Optional<String> apply(int number) {
-        return multipleNumbers.stream()
-                .filter(multiple -> isDivisible(number, multiple.getMultiple()))
-                .map(MultipleNumber::getValue)
+        return numberFactors.stream()
+                .filter(multiple -> isDivisible(number, multiple.getNumber()))
+                .map(NumberFactor::getValue)
                 .reduce(String::concat);
     }
 

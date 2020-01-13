@@ -1,16 +1,18 @@
 package com.thoughtworks.rule;
 
+import com.thoughtworks.NumberFactor;
+
 import java.util.Optional;
 
 public class ContainRule extends Rule {
 
-    private String factor;
+    private String numberStr;
     private String value;
 
-    public ContainRule(boolean enabled, String factor, String value) {
+    public ContainRule(boolean enabled, NumberFactor numberStr) {
         super(enabled);
-        this.factor = factor;
-        this.value = value;
+        this.numberStr = numberStr.getNumberStr();
+        this.value = numberStr.getValue();
     }
 
     @Override
@@ -20,6 +22,6 @@ public class ContainRule extends Rule {
 
 
     private boolean contains(int number) {
-        return String.valueOf(number).contains(factor);
+        return String.valueOf(number).contains(numberStr);
     }
 }

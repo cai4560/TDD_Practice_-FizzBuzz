@@ -1,6 +1,7 @@
 package com.thoughtworks;
 
 import com.thoughtworks.rule.Rule;
+import com.thoughtworks.rule.RuleCompositor;
 
 import java.io.FileWriter;
 import java.io.IOException;
