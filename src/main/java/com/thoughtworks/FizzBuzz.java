@@ -3,6 +3,7 @@ package com.thoughtworks;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class FizzBuzz {
 
@@ -21,14 +22,14 @@ public class FizzBuzz {
     }
 
     public String say(int number) {
-        if (number % 3 == 0) {
-            return "Fizz";
-        } else if (number % 5 == 0) {
-            return "Buzz";
-        } else if (number % 7 == 0) {
-            return "Whizz";
-        }
+        return Stream.of(MultipleNumber.values())
+                .filter(multiple -> isDivisible(number, multiple.getMultiple()))
+                .findFirst()
+                .map(MultipleNumber::getValue)
+                .orElse(String.valueOf(number));
+    }
 
-        return String.valueOf(number);
+    private boolean isDivisible(int number, int multiple) {
+        return number % multiple == 0;
     }
 }
