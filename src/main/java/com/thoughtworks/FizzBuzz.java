@@ -6,7 +6,7 @@ import com.thoughtworks.rule.Rule;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -37,11 +37,19 @@ public class FizzBuzz {
     }
 
     private List<Rule> initialRules(int number) {
-        boolean contain3 = contains(number, "3");
+        boolean contain5 = contains(number, "5");
+        boolean contain3 = !contain5 && contains(number, "3");
+
+        List<MultipleNumber> multipleNumbers = new ArrayList<>();
+        if (!contain5) {
+            multipleNumbers.add(MultipleNumber.FIZZ);
+        }
+        multipleNumbers.add(MultipleNumber.BUZZ);
+        multipleNumbers.add(MultipleNumber.WHIZZ);
 
         return List.of(
-                new MultipleRule(!contain3, Arrays.asList(MultipleNumber.values())),
-                new ContainRule(true, "3", "Fizz")
+                new MultipleRule(!contain3, multipleNumbers),
+                new ContainRule(!contain5, "3", "Fizz")
         );
     }
 
