@@ -50,12 +50,17 @@ public class FizzBuzzTest {
     }
 
     @Test
-    public void should_say_BuzzWhizz_when_input_35() {
-        assertThat(fizzBuzz.say(35)).isEqualTo("BuzzWhizz");
+    public void should_say_Fizz_when_input_13_for_contains_3() {
+        assertThat(fizzBuzz.say(13)).isEqualTo("Fizz");
     }
 
     @Test
-    public void should_say_Fizz_when_input_13_for_contains_3() {
-        assertThat(fizzBuzz.say(13)).isEqualTo("Fizz");
+    public void should_say_Fizz_when_input_30_for_rule5() {
+        assertThat(fizzBuzz.say(30)).isEqualTo("Fizz");
+    }
+
+    @Test
+    public void should_say_Fizz_when_input_35_for_rule5() {
+        assertThat(fizzBuzz.say(35)).isEqualTo("Fizz");
     }
 }

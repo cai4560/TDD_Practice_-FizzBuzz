@@ -2,12 +2,13 @@ package com.thoughtworks.rule;
 
 import java.util.Optional;
 
-public class ContainRule implements Rule {
+public class ContainRule extends Rule {
 
     private String factor;
     private String value;
 
-    public ContainRule(String factor, String value) {
+    public ContainRule(boolean enabled, String factor, String value) {
+        super(enabled);
         this.factor = factor;
         this.value = value;
     }

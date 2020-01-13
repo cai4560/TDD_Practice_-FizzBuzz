@@ -2,7 +2,17 @@ package com.thoughtworks.rule;
 
 import java.util.Optional;
 
-public interface Rule {
+public abstract class Rule {
 
-    Optional<String> apply(int number);
+    private boolean isEnabled;
+
+    public Rule(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public abstract Optional<String> apply(int number);
 }

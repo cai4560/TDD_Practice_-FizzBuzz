@@ -28,17 +28,24 @@ public class FizzBuzz {
     }
 
     public String say(int number) {
-        return initialRules().stream()
+        return initialRules(number).stream()
+                .filter(Rule::isEnabled)
                 .map(rule -> rule.apply(number))
                 .flatMap(Optional::stream)
                 .findFirst()
                 .orElse(String.valueOf(number));
     }
 
-    private List<Rule> initialRules() {
+    private List<Rule> initialRules(int number) {
+        boolean contain3 = contains(number, "3");
+
         return List.of(
-                new MultipleRule(Arrays.asList(MultipleNumber.values())),
-                new ContainRule("3", "Fizz")
+                new MultipleRule(!contain3, Arrays.asList(MultipleNumber.values())),
+                new ContainRule(true, "3", "Fizz")
         );
+    }
+
+    private boolean contains(int number, String factor) {
+        return String.valueOf(number).contains(factor);
     }
 }

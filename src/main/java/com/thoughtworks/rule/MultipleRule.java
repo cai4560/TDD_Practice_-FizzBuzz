@@ -5,11 +5,12 @@ import com.thoughtworks.MultipleNumber;
 import java.util.List;
 import java.util.Optional;
 
-public class MultipleRule implements Rule {
+public class MultipleRule extends Rule {
 
     private List<MultipleNumber> multipleNumbers;
 
-    public MultipleRule(List<MultipleNumber> multipleNumbers) {
+    public MultipleRule(boolean isEnabled, List<MultipleNumber> multipleNumbers) {
+        super(isEnabled);
         this.multipleNumbers = multipleNumbers;
     }
 
