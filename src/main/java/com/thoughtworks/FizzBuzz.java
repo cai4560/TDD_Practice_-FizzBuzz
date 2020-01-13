@@ -24,8 +24,8 @@ public class FizzBuzz {
     public String say(int number) {
         return Stream.of(MultipleNumber.values())
                 .filter(multiple -> isDivisible(number, multiple.getMultiple()))
-                .findFirst()
                 .map(MultipleNumber::getValue)
+                .reduce(String::concat)
                 .orElse(String.valueOf(number));
     }
 
